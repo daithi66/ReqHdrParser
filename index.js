@@ -17,15 +17,23 @@ app.get("/whoami", (req, res) => {
         ipAddress = ip.address();
         language = req.header('Accept-Language');
         language = language.substring(0, language.indexOf(","));
-        software = os.platform().toLowerCase();
-        if (software === "freebsd" || software === "linux" || software === "sunos") {
-            software = "unix (" + software + ")";
-        } else if (software === "darwin") {
+        software = req.headers['user-agent'].toLowerCase();
+        if (software.indexOf("windows nt 10") >= 0) {
+            software = "Windows 10";
+        } else if (software.indexOf("windows nt") >= 0) {
+            software = "Windows NT";
+        } else if (software.indexOf("windows 98") >= 0) {
+            software = "Windows 98";
+        } else if (software.indexOf("windows 95") >= 0) {
+            software = "Windows 95";
+        } else if (software.indexOf("windows 16") >= 0) {
+            software = "Windows 3.11";
+        } else if (software.indexOf("mac") >= 0) {
             software = "Mac OS";
-        } else if (software === "win32") {
-            software = os.release();
-            software = software.substring(0, software.indexOf("."));
-            software = "Windows " + software;
+        } else if (software.indexOf("X11") >= 0) {
+            software = "Unix";
+        } else {
+            software = "Unknown";
         }
     } catch (error) {
         console.log("Error:", error);
