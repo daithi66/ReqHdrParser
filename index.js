@@ -4,7 +4,6 @@
 
 const express = require("express");
 const ip = require("ip");
-const os = require('os');
 
 var app = express();
 
